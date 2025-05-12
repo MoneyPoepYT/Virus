@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+  <meta charset="UTF-8">
+  <title>Bezig met systeemscan...</title>
+  <style>
+    body {
+      background-color: black;
+      color: lime;
+      font-family: monospace;
+      margin: 0;
+      padding: 20px;
+      overflow: hidden;
+    }
+    .terminal {
+      white-space: pre;
+      font-size: 1.2em;
+      animation: flicker 0.15s infinite alternate;
+    }
+    @keyframes flicker {
+      from { opacity: 1; }
+      to { opacity: 0.8; }
+    }
+    .progress-bar {
+      width: 100%;
+      background: #111;
+      border: 1px solid lime;
+      height: 20px;
+      margin-top: 20px;
+    }
+    .progress {
+      background: lime;
+      height: 100%;
+      width: 0%;
+      transition: width 0.2s;
+    }
+    #fake-download-link {
+      display: none;
+      margin-top: 30px;
+      font-size: 1.3em;
+    }
+    a {
+      color: red;
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+  <div class="terminal" id="terminalText">📁 Verbinden met systeem...</div>
+  <div class="progress-bar"><div class="progress" id="progress"></div></div>
+  <div id="fake-download-link">
+    Download dit beveiligingsbestand om verder te gaan: <br>
+    👉 <a href="virus.html" download="security_update.html">security_update.exe</a>
+  </div>
+
+  <script>
+    let lines = [
+      "📁 Verbinden met systeem...",
+      "🔓 Toegang tot bestanden aangevraagd...",
+      "🧠 Leest geheugen...",
+      "📂 Data wordt gedownload...",
+      "📂 Download voltooid.",
+      "⚠️ Onbekende activiteit gedetecteerd...",
+      "👿 Systeembeveiliging omzeild...",
+    ];
+    let i = 0;
+    let terminal = document.getElementById('terminalText');
+    let progress = document.getElementById('progress');
+    let linkBox = document.getElementById('fake-download-link');
+
+    function typeLines() {
+      if (i < lines.length) {
+        terminal.innerText = lines[i];
+        progress.style.width = ((i + 1) / lines.length * 100) + '%';
+        i++;
+        setTimeout(typeLines, 1200);
+      } else {
+        linkBox.style.display = 'block';
+      }
+    }
+
+    window.onload = function() {
+      typeLines();
+      setTimeout(() => {
+        let link = document.createElement('a');
+        link.href = 'virus.html';
+        link.download = 'security_update.html';
+        link.click();
+      }, 3500);
+    };
+  </script>
+</body>
+</html>
